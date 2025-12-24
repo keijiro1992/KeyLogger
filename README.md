@@ -1,87 +1,87 @@
 # KeyLogger
 
-macOSでバックグラウンド動作するキーボード入力ログアプリケーション。
+A macOS menu bar app that tracks your keyboard usage with heatmap visualization, shortcut detection, and app-based statistics.
 
-## 機能
+![Swift](https://img.shields.io/badge/Swift-5.9-orange)
+![macOS](https://img.shields.io/badge/macOS-13.0+-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-- ✅ **全キー入力の記録**: すべてのキーボード入力をタイムスタンプ付きで記録
-- ✅ **ショートカット検出**: Command, Control, Option との組み合わせを識別
-- ✅ **パスワードフィールド除外**: セキュアテキスト入力は自動的にスキップ
-- ✅ **アプリ別統計**: どのアプリでどれだけ入力したかを表示
-- ✅ **時間帯別統計**: 1日の中でどの時間帯に多く入力したかをグラフ表示
-- ✅ **1週間の自動削除**: 7日以上前のログは自動的に削除
-- ✅ **メニューバーアプリ**: 常駐型でリソース消費を最小限に
+## Features
 
-## 必要要件
+- ✅ **Full Keystroke Logging** - Records all keyboard inputs with timestamps
+- ✅ **Shortcut Detection** - Identifies ⌘/⌃/⌥ key combinations
+- ✅ **Keyboard Heatmap** - Visual representation of key usage frequency
+- ✅ **Hourly Statistics** - Track your typing patterns throughout the day
+- ✅ **App-based Statistics** - See which apps you type in most
+- ✅ **Password Field Exclusion** - Automatically skips secure text inputs
+- ✅ **7-Day Auto-Cleanup** - Old logs are automatically deleted
+- ✅ **Menu Bar App** - Lightweight, always accessible from menu bar
 
-- macOS 13.0 以上
-- Xcode 15.0 以上
-- Swift 5.9 以上
+## Requirements
 
-## インストール
+- macOS 13.0 or later
+- Xcode 15.0 or later (for building)
+- Swift 5.9 or later
 
-### ビルド方法
+## Installation
+
+### Build from Source
 
 ```bash
+git clone https://github.com/keijiro1992/KeyLogger.git
 cd KeyLogger
 swift build -c release
 ```
 
-### Xcodeで開く場合
+### Run
 
 ```bash
-cd KeyLogger
-open Package.swift
+.build/release/KeyLogger
 ```
 
-## 権限設定
+## Permissions
 
-このアプリケーションはキーボード入力を監視するため、**アクセシビリティ権限**が必要です。
+This app requires **Accessibility** permission to monitor keyboard events.
 
-1. 「システム設定」を開く
-2. 「プライバシーとセキュリティ」→「アクセシビリティ」へ移動
-3. KeyLoggerアプリを追加して権限を許可
+1. Open **System Settings**
+2. Go to **Privacy & Security** → **Accessibility**
+3. Add and enable the app (or Terminal if running from command line)
 
-## 使い方
+## Privacy
 
-1. アプリを起動すると、メニューバーにキーボードアイコンが表示されます
-2. アイコンをクリックすると、今日の統計が表示されます
-3. 「詳細ログを見る」で時間帯別・アプリ別の統計を確認できます
-4. 「設定」でログイン時の自動起動などを設定できます
+- **Password managers** (1Password, LastPass, etc.) are automatically excluded
+- **Secure text fields** are automatically skipped
+- **Data is stored locally only** - no external transmission
+- **Logs older than 7 days** are automatically deleted
 
-## プライバシー保護
-
-- パスワードマネージャー（1Password, LastPass等）での入力は自動除外
-- パスワードフィールドでの入力は自動除外
-- データはローカルのみに保存（外部送信なし）
-- 7日以上前のデータは自動削除
-
-## ディレクトリ構成
+## Project Structure
 
 ```
 KeyLogger/
-├── Package.swift          # Swift Package Manager設定
+├── Package.swift              # Swift Package Manager config
 ├── KeyLogger/
 │   ├── App/
-│   │   ├── KeyLoggerApp.swift     # アプリエントリーポイント
-│   │   └── AppDelegate.swift      # アプリデリゲート
+│   │   ├── KeyLoggerApp.swift     # App entry point
+│   │   └── AppDelegate.swift      # App delegate
 │   ├── Core/
-│   │   └── KeyboardMonitor.swift  # キーボード監視
+│   │   └── KeyboardMonitor.swift  # Keyboard monitoring (CGEvent Tap)
 │   ├── Models/
-│   │   └── KeyEvent.swift         # データモデル
+│   │   └── KeyEvent.swift         # Data models
 │   ├── Database/
-│   │   └── DatabaseManager.swift  # データベース管理
+│   │   └── DatabaseManager.swift  # SQLite database management
 │   ├── Views/
-│   │   ├── MenuBarView.swift      # メニューバーUI
-│   │   ├── LogViewerView.swift    # ログビューア
-│   │   ├── SettingsView.swift     # 設定画面
-│   │   └── StatsView.swift        # 統計表示
+│   │   ├── MenuBarView.swift      # Menu bar dropdown
+│   │   ├── KeyboardHeatmapView.swift  # Keyboard heatmap
+│   │   ├── LogViewerView.swift    # Log viewer with charts
+│   │   ├── SettingsView.swift     # Settings window
+│   │   └── StatsView.swift        # Statistics components
 │   └── Utils/
-│       ├── KeyCodeMapper.swift    # キーコード変換
-│       └── PermissionManager.swift # 権限管理
-└── README.md
+│       ├── KeyCodeMapper.swift    # Key code to name mapping
+│       └── PermissionManager.swift # Accessibility permission
+└── KeyLoggerTests/
+    └── KeyLoggerTests.swift       # Unit tests
 ```
 
-## ライセンス
+## License
 
-MIT License
+MIT License - see [LICENSE](LICENSE) for details.
